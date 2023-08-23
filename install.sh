@@ -97,6 +97,8 @@ mysql> UNINSTALL COMPONENT 'file://component_validate_password';
 mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'new-password';
 mysql> exit;
 
+#Use phpmyadmin as user if root user not set up
+
 sudo service mysql restart
 
 # mysql -u root -p[as you set it]
