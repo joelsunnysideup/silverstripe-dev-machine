@@ -22,72 +22,71 @@ sudo apt -y update
 
 
 #########################################
-# SOFTWARE
+# UTILS
 #########################################
 
+#########################################
 # install vs code
 https://code.visualstudio.com/download
 
-
+#########################################
 # install chrome
 https://www.google.com/chrome/
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt -y install ./google-chrome-stable_current_amd64.deb
 
+#########################################
 # install git
 sudo apt -y install git
 git config --global corsudo e.filemode false
 
+#########################################
 # install meld - for git merges
 sudo apt -y install meld
 	
+#########################################
 # install curl
 sudo apt -y install curl
 
-
+#########################################
 # install gimp
-# see: 
-# Uninstall GIMP
-sudo apt-get -y autoremove gimp gimp-plugin-registry
-# Add the following PPA
-sudo add-apt-repository ppa:otto-kesselgulasch/gimp
-sudo apt -y update
-# Reinstall the latest GIMP
-sudo apt -y install gimp
-
-# or ...
 sudo snap install gimp --channel=edge
 
-
-# # atom
-# wget -qO - https://packagecloud.io/AtomEditor/atom/gpgkey | sudo apt-key add -
-# sudo sh -c 'echo "deb [arch=amd64] https://packagecloud.io/AtomEditor/atom/any/ any main" > /etc/apt/sources.list.d/atom.list'
-# sudo apt -y update
-# sudo apt -y install atom
-# apm install atom-updater-linux
-# apm install sync-settings
-# # https://atom.io/packages/sync-settings
-
-
-
+#########################################
 # install npm
 sudo apt -y install nodejs
 sudo apt -y install npm
 
 # install nvm
-https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/
+# https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 
+#########################################
 # install slack
 sudo snap install slack --classic
+
+
 
 
 #########################################
 # LAMP
 #########################################
 
+#########################################
 # install apache
 sudo apt -y install apache2
-	
+
+# install additional apache modules
+sudo a2enmod rewrite
+sudo a2enmod vhost_alias
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo service apache2 restart
+# set php settings
+sudo echo "date.timezone = 'Pacific/Auckland'" >> /etc/php/7.4/apache2/php.ini
+sudo service apache2 restart
+
+#########################################
 # install mysql
 sudo apt -y  install mysql-server
 sudo /usr/bin/mysql_secure_installation
@@ -103,24 +102,16 @@ sudo service mysql restart
 # mysql -u root -p[as you set it]
 # see: https://linuxconfig.org/how-to-reset-root-mysql-password-on-ubuntu-18-04-bionic-beaver-linux
 
-# install additioanl apache modules
-sudo a2enmod rewrite
-sudo a2enmod vhost_alias
-sudo a2enmod proxy
-sudo a2enmod proxy_http
-sudo service apache2 restart
-
+#########################################
 # install phpmyadmin
 sudo apt -y install phpmyadmin	
 
+#########################################
 # install php versions
 git clone https://github.com/sunnysideup/silverstripe-switch-php-versions.git
-
-# install
 sudo bash silverstripe-switch-php-versions/install.sh
-
-# remove install files
 rm silverstripe-switch-php-versions -rf
+
 
 
 #########################################
@@ -154,16 +145,9 @@ composer global update
 #########################################
 
 # set up public key and create aliases
+ssh-keygen
 sudo nano ~/.ssh/config 
 	
-
-# set php settings
-sudo echo "date.timezone = 'Pacific/Auckland'" >> /etc/php/7.4/apache2/php.ini
-sudo service apache2 restart
-
-# set up public key
-ssh-keygen
-
 
 
 #########################################
@@ -177,9 +161,9 @@ sudo nano /etc/apache2/sites-enabled/sites-enabled.conf
 
 sudo chown ssu:www-data . -R
 # create folders for silverstripe
-mkdir /var/www/ss3
-mkdir /var/www/ss4
-mkdir /var/www/ss5
+sudo mkdir /var/www/ss3
+sudo mkdir /var/www/ss4
+sudo mkdir /var/www/ss5
 
 # set up aliases
 sudo ln -s /var/www/ss3 /ss3
